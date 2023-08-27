@@ -41,27 +41,24 @@ func merge(nums []int, start, mid, end int) int {
 		}
 	}
 
-	mergeArr := make([]int, end-start)
+	mergeArr := make([]int, 0)
 	l = start
 	r = mid
-	counter := 0
-
 	for l < mid && r < end {
 		if nums[l] <= nums[r] {
-			mergeArr[counter] = nums[l]
+			mergeArr = append(mergeArr, nums[l])
 			l++
 		} else {
-			mergeArr[counter] = nums[r]
+			mergeArr = append(mergeArr, nums[r])
 			r++
 		}
-		counter++
 	}
 
 	if l == mid {
-		copy(nums[start:(start+counter)], mergeArr[0:counter])
+		copy(nums[start:(start+len(mergeArr))], mergeArr[0:])
 	} else {
-		copy(nums[(start+counter):end], nums[l:mid])
-		copy(nums[start:(start+counter)], mergeArr[:counter])
+		copy(nums[(start+len(mergeArr)):end], nums[l:mid])
+		copy(nums[start:(start+len(mergeArr))], mergeArr[0:])
 	}
 
 	return rCount
