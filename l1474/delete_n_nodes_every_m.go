@@ -1,7 +1,5 @@
 package l1474
 
-import "fmt"
-
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -16,24 +14,36 @@ type ListNode struct {
 }
 
 func DeleteNodes(head *ListNode, m int, n int) *ListNode {
-	tmp := head
-	//var lastNonDelete *ListNode
-	lastNonDelete := head
-	count := 1
-	for tmp != nil {
-		fmt.Printf("l1: count=%v tmp=%v last=%v\n", count, tmp, lastNonDelete)
-		if count%(m+n) == 0 {
-			(*lastNonDelete).Next = (*tmp).Next
+	var prev *ListNode
+	ptr := head
+
+	for ptr != nil {
+		for i := 0; i < m && ptr != nil; i++ {
+			prev = ptr
+			ptr = (*ptr).Next
 		}
-		if count%(m+n) < m {
-			lastNonDelete = (*tmp).Next
-			tmp = (*tmp).Next
+		for i := 0; i < n && ptr != nil; i++ {
+			ptr = (*ptr).Next
+		}
+
+		(*prev).Next = ptr
+	}
+
+	return head
+}
+
+func NewLinkedList(input []int) *ListNode {
+	var head *ListNode
+	var prev *ListNode
+	for i, val := range input {
+		if i == 0 {
+			head = &ListNode{val, nil}
+			prev = head
 		} else {
-			tmp = (*tmp).Next
-			(*lastNonDelete).Next = nil
+			ptr := &ListNode{val, nil}
+			(*prev).Next = ptr
+			prev = ptr
 		}
-		count++
-		fmt.Printf("l2: count=%v tmp=%v last=%v\n", count, tmp, lastNonDelete)
 	}
 	return head
 }
