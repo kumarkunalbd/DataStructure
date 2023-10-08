@@ -7,35 +7,28 @@
  * }
  */
 func longestConsecutive(root *TreeNode) int {
-	_, longest := longestConseSeq(root)
-	return longest
+	return dfs(root, math.MinInt, 0)
 }
 
-func longestConseSeq(root *TreeNode) (int, int) {
+func dfs(root *TreeNode, target, curSeq int) int {
 	// base case
 	if root == nil {
-		return 0, 0
+		return 0
 	}
-
 	// main logic
-	curSeqL, longestL := longestConseSeq((*root).Left)
-	if (*root).Left != nil && (*(*root).Left).Val-(*root).Val == 1 {
-		curSeqL++
-	} else {
-		curSeqL = 1
+	if (*root).Val != target {
+		curSeq = 0
 	}
-	curSeqR, longestR := longestConseSeq((*root).Right)
-	if (*root).Right != nil && (*(*root).Right).Val-(*root).Val == 1 {
-		curSeqR++
-	} else {
-		curSeqR = 1
+	curSeq++
+	lMax := dfs((*root).Left, (*root).Val+1, curSeq)
+	rMax := dfs((*root).Right, (*root).Val+1, curSeq)
+
+	if lMax > curSeq {
+		curSeq = lMax
 	}
-	maxSeq := int(math.Max(float64(curSeqL), float64(curSeqR)))
-	longest := int(math.Max(float64(longestL), float64(longestR)))
-	if maxSeq > longest {
-		longest = maxSeq
+	if rMax > curSeq {
+		curSeq = rMax
 	}
 
-	return maxSeq, longest
-
+	return curSeq
 }
