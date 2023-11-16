@@ -1,74 +1,48 @@
 package l502
 
-import "math"
-
-type IPO struct {
-	Profit  int
-	Capital int
-}
+import "math/rand"
 
 type MaxHeap struct {
-	Values  []IPO
-	CurSize int
+	Values []int
 }
 
-func (maxHeap *MaxHeap) AddElement(val IPO) {
+func NewMaxHeap() *MaxHeap {
+	return &MaxHeap{
+		Values: make([]int, 0),
+	}
+}
+
+func (maxHeap *MaxHeap) AddElement(val int) {
 	maxHeap.Values = append(maxHeap.Values, val)
 	curI := len(maxHeap.Values) - 1
 	for curI > 0 {
 		parentI := (curI - 1) / 2
-		if (maxHeap.Values[curI].Profit > maxHeap.Values[parentI].Profit) || (maxHeap.Values[curI].Profit == maxHeap.Values[parentI].Profit && maxHeap.Values[curI].Capital < maxHeap.Values[parentI].Capital) {
+		if maxHeap.Values[parentI] < maxHeap.Values[curI] {
 			maxHeap.Values[curI], maxHeap.Values[parentI] = maxHeap.Values[parentI], maxHeap.Values[curI]
 			curI = parentI
 		} else {
 			break
 		}
 	}
-	maxHeap.CurSize++
 }
 
-func (maxHeap *MaxHeap) RemoveElementTop() {
-	maxHeap.RemoveElementAtIndex(0)
-	/*maxHeap.Values[0],maxHeap.Values[maxHeap.CurSize-1] = maxHeap.Values[maxHeap.CurSize-1],maxHeap.Values[0]
-	  maxHeap.Values = maxHeap.Values[:len(maxHeap.Values)-1]
-	  maxHeap.CurSize--
-	  curI := 0
-	  for {
-	      leftC := 2*curI+1
-	      maxI := curI
-	      if leftC < len(maxHeap.Values) && (maxHeap.Values[leftC].Profit>maxHeap.Values[curI].Profit || (maxHeap.Values[leftC].Profit == maxHeap.Values[curI].Profit && maxHeap.Values[leftC].Capital < maxHeap.Values[curI].Capital)){
-	          maxI = leftC
-	      }
-
-	      rightC := 2*curI+2
-	      if rightC < len(maxHeap.Values) && (maxHeap.Values[rightC].Profit>maxHeap.Values[maxI].Profit || (maxHeap.Values[rightC].Profit == maxHeap.Values[maxI].Profit && maxHeap.Values[rightC].Capital < maxHeap.Values[maxI].Capital)){
-	          maxI = rightC
-	      }
-	      if maxI != curI{
-	          maxHeap.Values[curI],maxHeap.Values[maxI] = maxHeap.Values[maxI],maxHeap.Values[curI]
-	          curI = maxI
-	      }else{
-	          break
-	      }
-	  }*/
-}
-
-func (maxHeap *MaxHeap) RemoveElementAtIndex(ind int) {
-	maxHeap.Values[ind], maxHeap.Values[maxHeap.CurSize-1] = maxHeap.Values[maxHeap.CurSize-1], maxHeap.Values[ind]
+func (maxHeap *MaxHeap) RemoveTopElement() {
+	maxHeap.Values[0], maxHeap.Values[len(maxHeap.Values)-1] = maxHeap.Values[len(maxHeap.Values)-1], maxHeap.Values[0]
 	maxHeap.Values = maxHeap.Values[:len(maxHeap.Values)-1]
-	maxHeap.CurSize--
-	curI := ind
+
+	curI := 0
+
 	for curI < len(maxHeap.Values) {
-		leftC := 2*curI + 1
 		maxI := curI
-		if leftC < len(maxHeap.Values) && (maxHeap.Values[leftC].Profit > maxHeap.Values[curI].Profit || (maxHeap.Values[leftC].Profit == maxHeap.Values[curI].Profit && maxHeap.Values[leftC].Capital < maxHeap.Values[curI].Capital)) {
+		leftC := curI*2 + 1
+		if leftC < len(maxHeap.Values) && maxHeap.Values[leftC] > maxHeap.Values[maxI] {
 			maxI = leftC
 		}
-
-		rightC := 2*curI + 2
-		if rightC < len(maxHeap.Values) && (maxHeap.Values[rightC].Profit > maxHeap.Values[maxI].Profit || (maxHeap.Values[rightC].Profit == maxHeap.Values[maxI].Profit && maxHeap.Values[rightC].Capital < maxHeap.Values[maxI].Capital)) {
+		rightC := curI*2 + 2
+		if rightC < len(maxHeap.Values) && maxHeap.Values[rightC] > maxHeap.Values[maxI] {
 			maxI = rightC
 		}
+
 		if maxI != curI {
 			maxHeap.Values[curI], maxHeap.Values[maxI] = maxHeap.Values[maxI], maxHeap.Values[curI]
 			curI = maxI
@@ -78,69 +52,73 @@ func (maxHeap *MaxHeap) RemoveElementAtIndex(ind int) {
 	}
 }
 
-func NewHeapWithVal() *MaxHeap {
-	return &MaxHeap{
-		Values:  make([]IPO, 0),
-		CurSize: 0,
-	}
-}
-
 func findMaximizedCapital(k int, w int, profits []int, capital []int) int {
-	aHeap := NewHeapWithVal()
-
-	for i := 0; i < len(profits); i++ {
-		anIPO := IPO{
-			Profit:  profits[i],
-			Capital: capital[i],
-		}
-		aHeap.AddElement(anIPO)
-		//fmt.Printf("heap=%v\n",aHeap.Values)
-	}
-	//fmt.Printf("heap=%v\n",aHeap.Values)
-	maxCap := w
-	for i := 0; i < k; {
-		if aHeap.CurSize > 0 && aHeap.Values[0].Capital <= maxCap {
-			maxCap += aHeap.Values[0].Profit
-			i++
-			aHeap.RemoveElementTop()
-			//fmt.Printf("After top removal: heap=%v\n", aHeap.Values)
+	aHeap := NewMaxHeap()
+	quickSortTheArrays(profits, capital, 0, len(profits)-1)
+	//fmt.Printf("capital=%v\n",capital)
+	//fmt.Printf("profits=%v\n",profits)
+	notAvailablePtr := 0
+	maxC := w
+	for notAvailablePtr < len(capital) {
+		if capital[notAvailablePtr] <= w {
+			aHeap.AddElement(profits[notAvailablePtr])
+			notAvailablePtr++
 		} else {
-			leftI, curMaxInHeapLeft := findMaxProfitWithWealth(aHeap, maxCap, 1)
-			rightI, curMaxInHeapRight := findMaxProfitWithWealth(aHeap, maxCap, 2)
-			//fmt.Printf("i=%v curMaxInHeapLeft=%v curMaxInHeapRight=%v maxCap=%v\n",i,curMaxInHeapLeft,curMaxInHeapRight,maxCap)
-			curMaxCap := int(math.Max(float64(curMaxInHeapLeft), float64(curMaxInHeapRight)))
-			if curMaxCap != -1 {
-				maxCap += curMaxCap
-				i++
-				if curMaxCap == curMaxInHeapLeft {
-					aHeap.RemoveElementAtIndex(leftI)
-				} else {
-					aHeap.RemoveElementAtIndex(rightI)
-				}
-				//fmt.Printf("After Index removal: heap=%v\n", aHeap.Values)
+			break
+		}
+	}
+
+	//fmt.Printf("Heap=%v\n",aHeap)
+
+	for i := 0; i < k && len(aHeap.Values) != 0; i++ {
+		maxC += aHeap.Values[0]
+		aHeap.RemoveTopElement()
+		for notAvailablePtr < len(capital) {
+			if capital[notAvailablePtr] <= maxC {
+				aHeap.AddElement(profits[notAvailablePtr])
+				notAvailablePtr++
 			} else {
 				break
 			}
 		}
 	}
-	return maxCap
+	return maxC
 }
 
-func findMaxProfitWithWealth(maxHeap *MaxHeap, w, ind int) (int, int) {
-	if ind >= len(maxHeap.Values) {
-		return -1, -1
+func quickSortTheArrays(profits, capital []int, startI, endI int) {
+	// base case
+	if startI >= endI {
+		return
 	}
 
 	// main logic
-	if maxHeap.Values[ind].Capital <= w {
-		//return maxHeap.Values[ind].Profit
-		return ind, maxHeap.Values[ind].Profit
+	partI := partition(profits, capital, startI, endI)
+	quickSortTheArrays(profits, capital, startI, partI-1)
+	quickSortTheArrays(profits, capital, partI+1, endI)
+}
+
+func partition(profits, capital []int, startI, endI int) int {
+	//fmt.Printf("Partition profit=%v capital=%v startI=%v endI=%v\n",profits,capital,startI,endI)
+	pivot := rand.Intn(endI-startI) + startI
+	capital[pivot], capital[startI] = capital[startI], capital[pivot]
+	profits[pivot], profits[startI] = profits[startI], profits[pivot]
+	pivot = startI
+	l := startI + 1
+	r := endI
+
+	for l <= r {
+		if capital[l] <= capital[pivot] {
+			l++
+		} else if capital[r] > capital[pivot] {
+			r--
+		} else {
+			capital[l], capital[r] = capital[r], capital[l]
+			profits[l], profits[r] = profits[r], profits[l]
+			l++
+			r--
+		}
 	}
-	leftI, leftM := findMaxProfitWithWealth(maxHeap, w, 2*ind+1)
-	rightI, rightM := findMaxProfitWithWealth(maxHeap, w, 2*ind+2)
-	if leftM > rightM {
-		return leftI, leftM
-	}
-	return rightI, rightM
-	//return int(math.Max(float64(leftM),float64(rightM)))
+	capital[pivot], capital[r] = capital[r], capital[pivot]
+	profits[pivot], profits[r] = profits[r], profits[pivot]
+	return r
 }
