@@ -31,6 +31,5 @@ func permutationsWithCurInput(nums []int, includeI map[int]bool, curArr []int, c
 			}
 		}
 	}
-
 	return ans
 }
