@@ -5,42 +5,29 @@ type SortedArr []int
 func threeSum(nums []int) [][]int {
 	sortedArr := SortedArr(nums)
 	sortedArr.mergeSort(0, len(nums)-1)
-	//fmt.Printf("Sorted:=%v\n",nums)
 	ans := make([][]int, 0)
-	l := 0
-	for l < len(nums)-2 {
-		curCombs := twoSum(nums, l+1, 0-nums[l])
-		if len(curCombs) > 0 {
-			ans = append(ans, curCombs...)
-		}
-		l++
-		for l < len(nums)-2 && nums[l] == nums[l-1] {
-			l++
-		}
-	}
 
-	return ans
-}
-
-func twoSum(nums []int, sI int, target int) [][]int {
-	l := sI
-	r := len(nums) - 1
-	curCombs := make([][]int, 0)
-	for l < r {
-		curSum := nums[l] + nums[r]
-		if curSum == target {
-			curCombs = append(curCombs, []int{nums[sI-1], nums[l], nums[r]})
-			l++
-			for l < len(nums) && nums[l] == nums[l-1] {
+	for i, val := range nums {
+		if i > 0 && nums[i-1] == val {
+			continue
+		}
+		l, r := i+1, len(nums)-1
+		for l < r {
+			curSum := val + nums[l] + nums[r]
+			if curSum < 0 {
 				l++
+			} else if curSum > 0 {
+				r--
+			} else {
+				ans = append(ans, []int{val, nums[l], nums[r]})
+				l++
+				for l < r && nums[l] == nums[l-1] {
+					l++
+				}
 			}
-		} else if curSum < target {
-			l++
-		} else {
-			r--
 		}
 	}
-	return curCombs
+	return ans
 }
 
 func (sortArr SortedArr) mergeSort(sI, eI int) {
