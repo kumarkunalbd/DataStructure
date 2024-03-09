@@ -9,16 +9,8 @@ func sortList(head *ListNode) *ListNode {
 	if head == nil {
 		return head
 	}
-	mapNodePos := make(map[int]*ListNode)
-	tmp := head
-	cnt := 0
-	for tmp != nil {
-		mapNodePos[cnt] = tmp
-		tmp = tmp.Next
-		cnt++
-	}
-	ansNode := mergeSortList(mapNodePos, 0, len(mapNodePos)-1)
-	return ansNode
+
+	return mergeSortListSpaceOpt(head)
 }
 
 func mergeSortList(mapNodes map[int]*ListNode, s, e int) *ListNode {
@@ -38,6 +30,10 @@ func mergeSortList(mapNodes map[int]*ListNode, s, e int) *ListNode {
 }
 
 func mergeSortListSpaceOpt(startNode *ListNode) *ListNode {
+	// base case
+	if startNode.Next == nil {
+		return startNode
+	}
 
 	// main logic
 	s, f := startNode, startNode
