@@ -19,7 +19,7 @@ func dfsSubset(nums []int, curI int, curArr []int, ansArr [][]int) [][]int {
 		ansArr = append(ansArr, cloneArr)
 		return ansArr
 	}
-	// main logic
+	// cmd logic
 	ansArr = dfsSubset(nums, curI-1, curArr, ansArr)
 	curArr = append(curArr, nums[curI])
 	ansArr = dfsSubset(nums, curI-1, curArr, ansArr)

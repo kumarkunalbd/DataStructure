@@ -11,7 +11,7 @@ func dfsComSum3(k, tarLeft, curNum int, curList []int, ans [][]int) [][]int {
 	if len(curList) == k {
 		return ans
 	}
-	// main logic
+	// cmd logic
 	i := curNum
 	for {
 		if i > 9 {

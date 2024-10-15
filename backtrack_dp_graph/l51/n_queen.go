@@ -27,7 +27,7 @@ func dfsNQueen(n, curRow int, curArrString []string, ans [][]string, setVPoints 
 		//fmt.Printf("adding:  ans=%v\n", ans)
 		return ans
 	}
-	// main logic
+	// cmd logic
 	var sb strings.Builder
 	for i := 0; i < n; i++ {
 		sb.WriteRune('.')

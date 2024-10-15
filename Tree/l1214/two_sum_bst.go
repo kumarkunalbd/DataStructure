@@ -44,7 +44,7 @@ func inOrder(root *TreeNode, input []int) []int {
 		return input
 	}
 
-	// main logic
+	// cmd logic
 	input = inOrder(root.Left, input)
 	input = append(input, root.Val)
 	input = inOrder(root.Right, input)

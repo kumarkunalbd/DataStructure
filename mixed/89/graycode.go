@@ -12,7 +12,7 @@ func grayCodeHelper(bitPos int, res []int) []int {
 		return res
 	}
 
-	// main logic
+	// cmd logic
 	res = grayCodeHelper(bitPos-1, res)
 	sLength := len(res)
 	for i := sLength - 1; i >= 0; i-- {

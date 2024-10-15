@@ -38,7 +38,7 @@ func mergeSortInts(nums []int, s, e int) []int {
 	if s >= e {
 		return nums
 	}
-	// main logic
+	// cmd logic
 	mid := s + (e-s+1)/2
 	nums = mergeSortInts(nums, s, mid-1)
 	nums = mergeSortInts(nums, mid, e)

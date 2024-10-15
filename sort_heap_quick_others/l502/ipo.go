@@ -91,7 +91,7 @@ func quickSortTheArrays(profits, capital []int, startI, endI int) {
 		return
 	}
 
-	// main logic
+	// cmd logic
 	partI := partition(profits, capital, startI, endI)
 	quickSortTheArrays(profits, capital, startI, partI-1)
 	quickSortTheArrays(profits, capital, partI+1, endI)

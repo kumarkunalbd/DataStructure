@@ -34,7 +34,7 @@ func (sortArr SortedArr) mergeSort(sI, eI int) {
 	if sI >= eI {
 		return
 	}
-	// main logic
+	// cmd logic
 	mid := (eI + sI) / 2
 	sortArr.mergeSort(sI, mid)
 	sortArr.mergeSort(mid+1, eI)

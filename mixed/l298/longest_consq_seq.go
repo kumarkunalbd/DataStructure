@@ -31,7 +31,7 @@ func dfs(root *TreeNode, target, curSeq int, maxP *int) {
 	if root == nil {
 		return
 	}
-	// main logic
+	// cmd logic
 	if (*root).Val != target {
 		curSeq = 0
 	}

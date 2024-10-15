@@ -65,7 +65,7 @@ func closetKValuesWithSlice(root *TreeNode, target float64, k int, adq *Dequeue)
 	if root == nil {
 		return
 	}
-	// main logic
+	// cmd logic
 	closetKValuesWithSlice(root.Left, target, k, adq)
 	curDiff := math.Abs(float64(root.Val) - target)
 	if adq.IsFull() {

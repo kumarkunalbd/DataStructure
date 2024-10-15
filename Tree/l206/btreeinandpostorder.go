@@ -37,7 +37,7 @@ func buildTreeRec(inorder []int, postorder []int, mappos map[int]int, sin int, e
 		return cr
 	}
 
-	// main logic
+	// cmd logic
 	cr := &TreeNode{
 		Val:   postorder[postrooti],
 		Left:  nil,

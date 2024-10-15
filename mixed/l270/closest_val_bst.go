@@ -21,7 +21,7 @@ func closestValueWithDiff(root *TreeNode, target float64) (int, float64) {
 	if root == nil {
 		return math.MaxInt, math.MaxFloat64
 	}
-	// main logic
+	// cmd logic
 	curDiff := math.Abs(float64(root.Val) - target)
 	closestVal := root.Val
 	if float64(root.Val) > target {

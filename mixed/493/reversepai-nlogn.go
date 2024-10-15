@@ -18,7 +18,7 @@ func mergeSort(nums []int, start, end int) int {
 		return 0
 	}
 
-	// main logic
+	// cmd logic
 	mid := start + (end-start)/2
 	leftC := mergeSort(nums, start, mid)
 	rightC := mergeSort(nums, mid, end)

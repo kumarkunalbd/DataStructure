@@ -19,7 +19,7 @@ func mergeSortList(mapNodes map[int]*ListNode, s, e int) *ListNode {
 		return mapNodes[s]
 	}
 
-	// main logic
+	// cmd logic
 	mid := s + (e-s+1)/2
 	aNode := mapNodes[mid-1]
 	aNode.Next = nil
@@ -35,7 +35,7 @@ func mergeSortListSpaceOpt(startNode *ListNode) *ListNode {
 		return startNode
 	}
 
-	// main logic
+	// cmd logic
 	s, f := startNode, startNode
 	prev := &ListNode{
 		Next: nil,

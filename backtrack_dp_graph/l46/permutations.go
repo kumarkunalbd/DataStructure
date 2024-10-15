@@ -19,7 +19,7 @@ func permutationsWithCurInput(nums []int, includeI map[int]bool, curArr []int, c
 		return ans
 	}
 
-	// main logic
+	// cmd logic
 	for i := 0; i < len(nums); i++ {
 		if i != curI {
 			if _, ok := includeI[i]; !ok {

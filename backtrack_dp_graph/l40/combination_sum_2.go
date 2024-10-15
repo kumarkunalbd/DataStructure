@@ -25,7 +25,7 @@ func CombinationSum2(candidates []int, target int) [][]int {
 }
 
 func dfsCombinationSum2(cand []int, target, curI int, ans [][]int, curList []int) [][]int {
-	// main logic
+	// cmd logic
 	i := curI
 	for {
 		if i >= len(cand) {

@@ -25,7 +25,7 @@ func getGCD(a, b int) int {
 	if a == 0 {
 		return b
 	}
-	// main logic
+	// cmd logic
 	if a < b {
 		a, b = b, a
 	}

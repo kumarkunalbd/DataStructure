@@ -25,7 +25,7 @@ func maxAvgTree(root *TreeNode) (int, int, float64) {
 	if root == nil {
 		return 0, 0, float64(0)
 	}
-	// main logic
+	// cmd logic
 	sL, nL, maxAvgL := maxAvgTree(root.Left)
 	sR, nR, maxAvgR := maxAvgTree(root.Right)
 

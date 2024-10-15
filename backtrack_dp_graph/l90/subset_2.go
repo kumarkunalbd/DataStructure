@@ -9,7 +9,7 @@ func (anArr custSlc) sortAsc(startI, endI int) {
 	if startI >= endI {
 		return
 	}
-	// main logic
+	// cmd logic
 	randNum := rand.Intn(endI-startI) + startI
 	anArr[randNum], anArr[startI] = anArr[startI], anArr[randNum]
 	pivot := startI
@@ -47,7 +47,7 @@ func SubsetsWithDup(nums []int) [][]int {
 
 func dfsSubsetsWithDup(nums []int, curArr []int, startInd int, ans [][]int) [][]int {
 
-	// main logic
+	// cmd logic
 	for i := startInd; i < len(nums); i++ {
 		newArr := append(curArr, nums[i])
 		finalArr := make([]int, len(newArr))

@@ -16,7 +16,7 @@ class Solution {
         if((end-start)<=1){
             return 0;
         }
-        // main logic
+        // cmd logic
         int mid = start + (end-start)/2;
         int leftC = mergeSortPairCount(numsL,start,mid);
         int rightC = mergeSortPairCount(numsL,mid,end);

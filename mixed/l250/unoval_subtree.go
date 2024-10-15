@@ -29,7 +29,7 @@ func univalSubtrees(root *TreeNode) (int, bool) {
 		return 1, true
 	}
 
-	// main logic
+	// cmd logic
 	lVal, isLU := univalSubtrees((*root).Left)
 	rVal, isRU := univalSubtrees((*root).Right)
 	if !isLU || !isRU {

@@ -34,7 +34,7 @@ func findAndDeleteLeaves(root, parent *TreeNode, left bool, nodes []int) []int {
 		}
 		return nodes
 	}
-	// main logic
+	// cmd logic
 	nodes = findAndDeleteLeaves(root.Left, root, true, nodes)
 	nodes = findAndDeleteLeaves(root.Right, root, false, nodes)
 	return nodes

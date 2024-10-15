@@ -51,7 +51,7 @@ func sortInts(nums []int, s, e int) {
 		return
 	}
 
-	// main logic
+	// cmd logic
 	randI := rand.Intn(e-s) + s
 	nums[s], nums[randI] = nums[randI], nums[s]
 	pN := nums[s]

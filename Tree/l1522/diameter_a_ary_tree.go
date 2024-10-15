@@ -18,7 +18,7 @@ func dfs(root *Node) (int, int) {
 	if root == nil {
 		return 0, 0
 	}
-	// main logic
+	// cmd logic
 	maxDia := 0
 	maxDepth := 0
 	secondMaxDepth := 0
